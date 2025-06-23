@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cosmic Forge Space Wallpaper Generator</title>
+    <meta name="description" content="Create stunning, unique, and high-resolution space wallpapers with the Cosmic Forge generator. Procedurally generate custom planets, nebulae, and starfields for your desktop or mobile background.">
+    <meta name="keywords" content="space wallpaper generator, custom planet creator, nebula generator, starfield background, procedural art, generative art, sci-fi wallpaper, celestial art, Chris Pirillo, Cosmic Forge">
+    <meta name="author" content="Chris Pirillo">
+    <link rel="canonical" href="https://pirillo.com/arcade/cosmic-forge.html" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pirillo.com/arcade/cosmic-forge.html">
+    <meta property="og:title" content="Cosmic Forge Space Wallpaper Generator">
+    <meta property="og:description" content="Create stunning, unique, and high-resolution space wallpapers with the Cosmic Forge generator. Procedurally generate custom planets, nebulae, and starfields for your desktop or mobile background.">
+    <meta property="og:image" content="https://pirillo.com/arcade/images/cosmic-forge.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pirillo.com/arcade/cosmic-forge.html">
+    <meta property="twitter:title" content="Cosmic Forge Space Wallpaper Generator">
+    <meta property="twitter:description" content="Create stunning, unique, and high-resolution space wallpapers with the Cosmic Forge generator. Procedurally generate custom planets, nebulae, and starfields for your desktop or mobile background.">
+    <meta property="twitter:image" content="https://pirillo.com/arcade/images/cosmic-forge.png">
+    <meta name="twitter:creator" content="@ChrisPirillo">
+
+    <!--
+    ================================================================================================
+    |                           PERFORMANCE & CORE WEB VITALS OPTIMIZATION                         |
+    ================================================================================================
+    |                                                                                              |
+    | The viewport tag ensures the page is correctly sized on all devices. Resource hints below    |
+    | are used to optimize loading performance.                                                    |
+    |                                                                                              |
+    | - `preconnect`: Initiates an early connection to critical third-party domains (Google Fonts) |
+    |   to reduce DNS, TCP, and TLS roundtrip times.                                               |
+    | - `preload`: Fetches the font CSS file with high priority, as it's a critical render-        |
+    |   blocking resource. This helps reduce First Contentful Paint (FCP).                         |
+    |                                                                                              |
+    ================================================================================================
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Resource Hints for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!--
+    ================================================================================================
+    |                                 THIRD-PARTY SCRIPT OPTIMIZATION                              |
+    ================================================================================================
+    |                                                                                              |
+    | Critical third-party libraries (Tailwind, Simplex Noise, Font Awesome) are loaded from       |
+    | fast, reliable CDNs. Scripts that are not essential for the initial render are loaded with   |
+    | `async` or `defer` to avoid blocking page rendering. Google Analytics is loaded asynchronously |
+    | to prevent any impact on initial page load performance.                                      |
+    |                                                                                              |
+    ================================================================================================
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Analytics - Loaded asynchronously to be non-render-blocking -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1CQ4D3VQ3L"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1CQ4D3VQ3L');
+    </script>
+
+    <!--
+    ================================================================================================
+    |                                   STRUCTURED DATA (JSON-LD)                                  |
+    ================================================================================================
+    |                                                                                              |
+    | This JSON-LD block provides structured data to search engines, helping them understand the   |
+    | page's content, author, and purpose. This can result in enhanced search result snippets      |
+    | (rich snippets), improving click-through rates.                                              |
+    |                                                                                              |
+    ================================================================================================
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Cosmic Forge Space Wallpaper Generator",
+      "description": "Create stunning, unique, and high-resolution space wallpapers with the Cosmic Forge generator. Procedurally generate custom planets, nebulae, and starfields for your desktop or mobile background.",
+      "url": "https://pirillo.com/arcade/cosmic-forge.html",
+      "author": {
+        "@type": "Person",
+        "name": "Chris Pirillo",
+        "url": "https://chris.pirillo.com/"
+      },
+      "image": "https://pirillo.com/arcade/images/cosmic-forge.png",
+      "keywords": "space wallpaper generator, custom planet creator, nebula generator, starfield background, procedural art, generative art, sci-fi wallpaper, celestial art, Chris Pirillo, Cosmic Forge",
+      "mainEntity": {
+        "@type": "SoftwareApplication",
+        "name": "Cosmic Forge",
+        "operatingSystem": "All",
+        "applicationCategory": "DesignApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0"
+        }
+      }
+    }
+    </script>
+    
+    <style>
+        :root {
+            --panel-width: 340px;
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        html, body {
+            overscroll-behavior: none;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            background-color: #000000;
+            color: #F9FAFB;
+            user-select: none;
+        }
+        #loader {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #000;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            transition: opacity 0.5s ease-out;
+            padding: 0 1rem;
+        }
+        #loader-text {
+            font-size: 1.5rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #00aaff;
+            text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+            animation: pulse-text 2s ease-in-out infinite;
+            padding-bottom: var(--safe-area-inset-bottom);
+            text-align: center;
+        }
+        @keyframes pulse-text {
+            0% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.7; transform: scale(1); }
+        }
+
+        /* --- Desktop Control Panel --- */
+        .control-panel {
+            position: fixed; top: 0; left: 0;
+            width: var(--panel-width); height: 100vh;
+            background-color: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(249, 250, 251, 0.1);
+            z-index: 100;
+            transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            display: none;
+            flex-direction: column;
+            transform: translateX(0);
+            font-family: 'Orbitron', sans-serif;
+        }
+        .control-panel.collapsed { transform: translateX(calc(var(--panel-width) * -1)); }
+
+        @media (min-width: 768px) {
+            .control-panel { display: flex; }
+        }
+        
+        #panel-toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: var(--panel-width);
+            z-index: 110;
+            background: rgba(10, 10, 15, 0.85);
+            border: 1px solid rgba(249, 250, 251, 0.1);
+            border-left: none;
+            color: #F9FAFB;
+            width: 44px;
+            height: 44px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: left 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+           #panel-toggle-btn { display: flex; }
+        }
+        
+        .control-panel.collapsed + #panel-toggle-btn {
+             left: 0;
+        }
+
+        .panel-header { text-align: center; }
+        .panel-header h2 { font-family: 'Orbitron', sans-serif; }
+        .panel-header p { font-family: 'Inter', sans-serif; }
+        .panel-content { overflow-y: auto; flex-grow: 1; }
+        .panel-content::-webkit-scrollbar { width: 4px; }
+        .panel-content::-webkit-scrollbar-track { background: transparent; }
+        .panel-content::-webkit-scrollbar-thumb { background: rgba(249, 250, 251, 0.2); border-radius: 2px; }
+
+        /* --- UI Elements --- */
+        .tab-nav { display: flex; justify-content: space-around; border-bottom: 1px solid #374151; padding: 0 1rem; }
+        .tab-button { display: flex; justify-content: center; align-items: center; width: 44px; height: 44px; cursor: pointer; border-bottom: 2px solid transparent; color: #9CA3AF; transition: all 0.2s ease-in-out; }
+        .tab-button:hover { color: #F9FAFB; }
+        .tab-button.active { color: #F9FAFB; border-bottom-color: #00aaff; }
+        .tab-content { display: none; padding: 1.5rem; }
+        .tab-content.active { display: block; }
+        .control-item { margin-bottom: 1.25rem; }
+        .control-item label { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; color: #D1D5DB; letter-spacing: 0.05em;}
+        input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: rgba(249, 250, 251, 0.1); outline: none; border-radius: 2px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; background: #F9FAFB; cursor: pointer; border-radius: 50%; border: 1px solid #000; }
+        .btn { display: flex; justify-content: center; align-items: center; width: 100%; padding: 12px; background-color: #374151; color: white; border: 1px solid rgba(249, 250, 251, 0.2); border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s; text-align: center; height: 48px; }
+        .btn:hover { background-color: #4B5563; }
+        .btn:disabled { background-color: #4B5563; cursor: not-allowed; opacity: 0.7; }
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4B5563; transition: .4s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #00aaff; }
+        input:checked + .slider:before { transform: translateX(18px); background-color: #1F2937;}
+        /* The .hidden class is managed by JS, but will no longer hide bloom controls */
+        .hidden { display: none !important; }
+        .is-generating .panel-content, .is-generating .tab-nav, .is-generating .panel-footer > .flex > #pause-toggle {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: blur(1px);
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* --- Mobile UI --- */
+        .mobile-ui { display: none; }
+        @media (max-width: 767px) {
+            .mobile-ui { display: flex; }
+        }
+
+        #mobile-controls-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(249, 250, 251, 0.1);
+            z-index: 150;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-top: 12px;
+            padding-bottom: calc(12px + var(--safe-area-inset-bottom));
+        }
+
+        .mobile-btn {
+            background: none; border: none; color: #D1D5DB;
+            font-size: 1.5rem; padding: 10px;
+            display: flex; flex-direction: column; align-items: center;
+            font-family: 'Inter', sans-serif; font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .mobile-btn i { margin-bottom: 4px; font-size: 1.25rem; }
+        .mobile-btn:disabled { color: #6B7280; }
+
+        #mobile-controls-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+        }
+        #mobile-controls-modal > .panel-content {
+             padding-bottom: calc(90px + var(--safe-area-inset-bottom));
+        }
+        #mobile-controls-modal.visible { display: flex; }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="loader"><div id="loader-text">Engaging Celestial Forge</div></div>
+    
+        <div id="canvas-container" role="img" aria-label="An interactive, procedurally generated view of a planet in space."></div>
+        
+        <aside class="control-panel">
+             <header class="panel-header p-6">
+                <div>
+                    <h1 class="text-3xl font-light text-white">Cosmic Forge</h1>
+                    <p class="text-sm font-light text-gray-400">Celestial Canvas Engine</p>
+                </div>
+            </header>
+            <nav class="tab-nav">
+                 <button class="tab-button active" data-tab="tab-scene" title="Scene Effects"><i class="fas fa-layer-group fa-lg"></i></button>
+                <button class="tab-button" data-tab="tab-universe" title="Universe"><i class="fas fa-star fa-lg"></i></button>
+                <button class="tab-button" data-tab="tab-geology" title="Geology"><i class="fas fa-mountain-sun fa-lg"></i></button>
+                <button class="tab-button" data-tab="tab-hydrosphere" title="Hydrosphere"><i class="fas fa-water fa-lg"></i></button>
+                <button class="tab-button" data-tab="tab-atmosphere" title="Atmosphere"><i class="fas fa-smog fa-lg"></i></button>
+                <button class="tab-button" data-tab="tab-export" title="Export"><i class="fas fa-camera fa-lg"></i></button>
+            </nav>
+            <div class="panel-content">
+                <!-- Tab content will be cloned here from the template -->
+            </div>
+            <footer class="panel-footer p-6">
+                <div class="flex items-center space-x-4">
+                    <button id="pause-toggle" class="btn w-auto px-4" title="Pause Animation">
+                        <i class="fas fa-pause fa-fw"></i>
+                    </button>
+                    <button id="new-planet-btn-footer" class="btn flex-grow">New System</button>
+                </div>
+            </footer>
+        </aside>
+    </main>
+
+    <button id="panel-toggle-btn" title="Toggle Panel">
+        <i class="fas fa-angles-left fa-lg"></i>
+    </button>
+
+
+    <!-- Mobile UI -->
+    <div class="mobile-ui">
+        <div id="mobile-controls-bar">
+             <button id="mobile-new-system-btn" class="mobile-btn"><i class="fas fa-meteor"></i><span>New System</span></button>
+             <button id="mobile-pause-btn" class="mobile-btn"><i class="fas fa-pause"></i><span>Pause</span></button>
+             <button id="mobile-show-controls-btn" class="mobile-btn"><i class="fas fa-sliders"></i><span>Controls</span></button>
+        </div>
+        <div id="mobile-controls-modal">
+            <header class="flex justify-between items-center p-4 border-b border-gray-700">
+                <h2 class="text-xl font-bold font-['Orbitron']">Controls</h2>
+                <button id="mobile-close-controls-btn" class="text-gray-400 hover:text-white text-2xl"><i class="fas fa-times"></i></button>
+            </header>
+            <nav class="tab-nav">
+                <!-- Mobile tabs will be cloned here -->
+            </nav>
+            <div class="panel-content">
+                <!-- Mobile tab content will be cloned here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content Template -->
+    <template id="controls-template">
+        <section id="tab-scene" class="tab-content">
+            <h3 class="sr-only">Scene Controls</h3>
+            <div class="control-item flex justify-between items-center"><label for="enableAtmosphere">Atmosphere</label><label class="switch"><input type="checkbox" id="enableAtmosphere" checked><span class="slider"></span></label></div>
+            <div class="control-item flex justify-between items-center"><label for="enableClouds">Clouds</label><label class="switch"><input type="checkbox" id="enableClouds" checked><span class="slider"></span></label></div>
+            <div class="control-item flex justify-between items-center"><label for="enableStarfield">Starfield</label><label class="switch"><input type="checkbox" id="enableStarfield" checked><span class="slider"></span></label></div>
+            <div class="control-item flex justify-between items-center"><label for="enableSun">Sun</label><label class="switch"><input type="checkbox" id="enableSun"><span class="slider"></span></label></div>
+            <div class="bloom-controls">
+                <div class="control-item"><label for="bloomStrength">Bloom Strength</label><input type="range" id="bloomStrength" min="0.5" max="0.9" step="0.05" value="0.8"></div>
+                <div class="control-item"><label for="bloomRadius">Bloom Radius</label><input type="range" id="bloomRadius" min="0" max="1.0" step="0.05" value="0.5"></div>
+            </div>
+        </section>
+        <section id="tab-universe" class="tab-content">
+            <h3 class="sr-only">Universe Controls</h3>
+            <div class="control-item"><label for="starTemp">Star Temperature (K)</label><input type="range" id="starTemp" min="2000" max="20000" value="5800"></div>
+            <div class="control-item"><label for="starIntensity">Star Intensity</label><input type="range" id="starIntensity" min="0.5" max="5" step="0.1" value="2.5"></div>
+            <div class="control-item"><label for="starDistance">Star Distance</label><input type="range" id="starDistance" min="3" max="40" step="0.1" value="6"></div>
+            <div class="control-item"><label for="sunSize">Sun Size</label><input type="range" id="sunSize" min="0.5" max="5" step="0.1" value="2.0"></div>
+            <div class="control-item"><label for="ambientLight">Ambient Light</label><input type="range" id="ambientLight" min="0.0" max="1.0" step="0.01" value="0.2"></div>
+            <div class="control-item"><label for="nebulaDensity">Nebula Density</label><input type="range" id="nebulaDensity" min="0" max="1" step="0.01" value="0.5"></div>
+        </section>
+        <section id="tab-geology" class="tab-content">
+             <h3 class="sr-only">Geology Controls</h3>
+            <div class="control-item"><label for="surfaceSeed">Surface Seed</label><input type="range" id="surfaceSeed" min="0" max="100" step="0.1" value="1.0"></div>
+            <div class="control-item"><label for="planetRotationSpeed">Planet Rotation</label><input type="range" id="planetRotationSpeed" min="0" max="0.5" step="0.01" value="0.1"></div>
+            <div class="control-item"><label for="landmassScale">Continent Scale</label><input type="range" id="landmassScale" min="0.5" max="5.0" step="0.1" value="1.8"></div>
+            <div class="control-item"><label for="mountainScale">Mountain Scale</label><input type="range" id="mountainScale" min="0.5" max="5.0" step="0.1" value="2.5"></div>
+            <div class="control-item"><label for="erosion">Erosion Strength</label><input type="range" id="erosion" min="0" max="2" step="0.1" value="0.8"></div>
+            <div class="control-item"><label for="geologicalComplexity">Geological Complexity</label><input type="range" id="geologicalComplexity" min="0.1" max="2.0" step="0.1" value="1.0"></div>
+            <div class="control-item"><label for="landHue">Land Hue</label><input type="range"id="landHue" min="0" max="1" step="0.01" value="0.2"></div>
+        </section>
+        <section id="tab-hydrosphere" class="tab-content">
+            <h3 class="sr-only">Hydrosphere Controls</h3>
+            <div class="control-item"><label for="waterLevel">Sea Level</label><input type="range" id="waterLevel" min="0.0" max="1.0" step="0.01" value="0.4"></div>
+            <div class="control-item"><label for="shallowOceanHue">Shallow Ocean Hue</label><input type="range" id="shallowOceanHue" min="0" max="1" step="0.01" value="0.55"></div>
+            <div class="control-item"><label for="deepOceanHue">Deep Ocean Hue</label><input type="range" id="deepOceanHue" min="0" max="1" step="0.01" value="0.65"></div>
+            <div class="control-item"><label for="iceCaps">Polar Ice</label><input type="range" id="iceCaps" min="0" max="1.5" step="0.01" value="0.9"></div>
+        </section>
+        <section id="tab-atmosphere" class="tab-content">
+            <h3 class="sr-only">Atmosphere Controls</h3>
+            <div class="control-item"><label for="atmoHue">Atmosphere Hue</label><input type="range" id="atmoHue" min="0" max="1" step="0.01" value="0.6"></div>
+            <div class="control-item"><label for="atmoDensity">Atmosphere Density</label><input type="range" id="atmoDensity" min="0" max="1.2" step="0.01" value="0.8"></div>
+            <div class="control-item"><label for="cloudCover">Cloud Cover</label><input type="range" id="cloudCover" min="0" max="1" step="0.01" value="0.5"></div>
+            <div class="control-item"><label for="cloudSpeed">Cloud Wind Speed</label><input type="range" id="cloudSpeed" min="0" max="0.1" step="0.001" value="0.02"></div>
+            <div class="control-item"><label for="cloudAltitude">Cloud Altitude</label><input type="range" id="cloudAltitude" min="1.01" max="1.05" step="0.001" value="1.02"></div>
+            <div class="control-item"><label for="cloudType">Cloud Style</label><input type="range" id="cloudType" min="0" max="1" step="0.01" value="0.5"></div>
+        </section>
+        <section id="tab-export" class="tab-content">
+             <h3 class="sr-only">Export Controls</h3>
+            <div class="control-item"><label for="resolution">Resolution</label><select id="resolution" class="w-full p-2 bg-gray-700 rounded-md text-white border border-gray-600"><option value="1920,1080">Desktop (1920x1080)</option><option value="1080,1920">Mobile (1080x1920)</option><option value="3840,2160">4K Desktop (3840x2160)</option></select></div>
+            <button id="export-btn" class="btn">Export PNG</button>
+        </section>
+    </template>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    
+    let scene, camera, renderer, controls, finalComposer, bloomComposer, finalPass;
+    let planet, atmosphere, clouds, starLight, sun, backgroundCubemap, ambientLight;
+    let clock = new THREE.Clock();
+    let bloomPass;
+    const blackBackground = new THREE.Color('black');
+    
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    const fidelitySettings = {
+        low: {
+            pixelRatio: Math.min(window.devicePixelRatio, 1.5),
+            planetSegments: 64,
+            starfieldSize: 512,
+            starCount: 3000,
+            bloom: true, // Changed from false to true to enable bloom on mobile
+        },
+        high: {
+            pixelRatio: window.devicePixelRatio,
+            planetSegments: 128,
+            starfieldSize: 1536,
+            starCount: 8000,
+            bloom: true, 
+        }
+    };
+    const activeFidelity = isMobile ? 'low' : 'high';
+    const settings = fidelitySettings[activeFidelity];
+
+    const BLOOM_SCENE = 1;
+    const bloomLayer = new THREE.Layers();
+    bloomLayer.set(BLOOM_SCENE);
+
+    const materials = {};
+    const darkMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
+
+    const planetUniforms = {
+        uSurfaceSeed: { value: 1.0 },
+        uStarPosition: { value: new THREE.Vector3() },
+        uStarIntensity: { value: 2.5 },
+        uLandmassScale: { value: 1.8 },
+        uMountainScale: { value: 2.5 },
+        uErosion: { value: 0.8 },
+        uGeologicalComplexity: { value: 1.0 },
+        uCraterDepth: { value: 0.1 },
+        uWaterLevel: { value: 0.4 },
+        uLandHue: { value: 0.2 },
+        uShallowOceanHue: { value: 0.55 },
+        uDeepOceanHue: { value: 0.65 },
+        uIceCaps: { value: 0.9 },
+        uAmbientLightIntensity: { value: 0.2 },
+        uNebulaDensity: { value: 0.5 },
+        uCraterPos1: { value: new THREE.Vector3(1,0,0).normalize() },
+        uCraterPos2: { value: new THREE.Vector3(0,1,0.5).normalize() },
+        uCraterSize1: { value: 0.2 },
+        uCraterSize2: { value: 0.1 },
+    };
+
+    async function init() {
+        try {
+            scene = new THREE.Scene();
+            ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            scene.add(ambientLight);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 3);
+
+            const canvasContainer = document.getElementById('canvas-container');
+            renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(settings.pixelRatio);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 0.5;
+            canvasContainer.appendChild(renderer.domElement);
+
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.target.set(0, 0, 0);
+            controls.minDistance = 1.25;
+            controls.maxDistance = 20;
+
+            const planetSegments = settings.planetSegments;
+            const planetGeometry = new THREE.SphereGeometry(1, planetSegments, planetSegments);
+
+            planet = new THREE.Mesh(planetGeometry, new THREE.ShaderMaterial({
+                vertexShader: planetVertexShader,
+                fragmentShader: planetFragmentShader,
+                uniforms: planetUniforms
+            }));
+            scene.add(planet);
+
+            atmosphere = new THREE.Mesh(planetGeometry, new THREE.ShaderMaterial({
+                vertexShader: atmoVertexShader, fragmentShader: atmoFragmentShader,
+                blending: THREE.AdditiveBlending, side: THREE.BackSide, transparent: true, depthWrite: false,
+                uniforms: { uTime: { value: 0 }, uStarPosition: { value: new THREE.Vector3() }, uAtmoHue: { value: 0.6 }, uAtmoDensity: { value: 1.0 } }
+            }));
+            atmosphere.scale.set(1.05, 1.05, 1.05);
+            scene.add(atmosphere);
+
+            clouds = new THREE.Mesh(planetGeometry, new THREE.ShaderMaterial({
+                 vertexShader: cloudVertexShader,
+                 fragmentShader: cloudFragmentShader,
+                 blending: THREE.NormalBlending,
+                 transparent: true, 
+                 depthWrite: false,
+                 uniforms: { 
+                     uTime: { value: 0 }, uCloudCover: { value: 0.5 }, uCloudSpeed: { value: 0.02 }, 
+                     uCloudDirection: { value: new THREE.Vector2(1, 1) }, uSurfaceSeed: { value: 1.0 }, 
+                     uCloudPatternSeed: { value: 0.5 }, uCloudType: { value: 0.5 } 
+                 }
+            }));
+            clouds.scale.set(1.02, 1.02, 1.02);
+            scene.add(clouds);
+
+            starLight = new THREE.PointLight(0xffffff, 1, 100);
+            scene.add(starLight);
+
+            const sunGeometry = new THREE.PlaneGeometry(1, 1);
+            const sunMaterial = new THREE.ShaderMaterial({
+                vertexShader: sunVertexShader,
+                fragmentShader: sunFragmentShader,
+                uniforms: { uColor: { value: new THREE.Color(0xffffff) } },
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                depthWrite: false,
+            });
+            sun = new THREE.Mesh(sunGeometry, sunMaterial);
+            sun.layers.enable(BLOOM_SCENE);
+            scene.add(sun);
+            
+            setupPostprocessing();
+            setupUI();
+            
+            await randomizePlanet(true);
+
+            animate();
+        } catch (error) {
+            console.error("Cosmic Forge failed to initialize:", error);
+            const loader = document.getElementById('loader');
+            if(loader) loader.innerHTML = `<div id="loader-text" class="text-red-500">Error: Initialization Failed</div>`;
+        }
+    }
+
+    function setupPostprocessing() {
+        const renderPass = new RenderPass(scene, camera);
+
+        // Bloom pass initialization. Its enabled state will be controlled by the 'enableSun' checkbox.
+        bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        bloomPass.threshold = 0;
+        bloomPass.strength = 0.8; 
+        bloomPass.radius = 0.5;
+
+        const bloomRenderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, { type: THREE.HalfFloatType });
+        bloomComposer = new EffectComposer(renderer, bloomRenderTarget);
+        bloomComposer.renderToScreen = false;
+        bloomComposer.addPass(renderPass);
+        bloomComposer.addPass(bloomPass);
+
+        finalPass = new ShaderPass(
+            new THREE.ShaderMaterial({
+                uniforms: {
+                    baseTexture: { value: null },
+                    bloomTexture: { value: bloomComposer.renderTarget2.texture },
+                    // uBloomEnabled will be set based on the 'enableSun' checkbox.
+                    uBloomEnabled: { value: 0.0 } 
+                },
+                vertexShader: finalVertexShader,
+                fragmentShader: finalFragmentShader,
+            }), "baseTexture"
+        );
+        finalPass.needsSwap = true;
+
+        finalComposer = new EffectComposer(renderer);
+        finalComposer.addPass(renderPass);
+        finalComposer.addPass(finalPass);
+    }
+    
+    function generateInBackground(task) {
+        return new Promise(resolve => {
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(async () => resolve(await task()), { timeout: 1000 });
+            } else {
+                setTimeout(async () => resolve(await task()), 100);
+            }
+        });
+    }
+
+    async function regenerateBackground() {
+        if (backgroundCubemap) backgroundCubemap.dispose();
+        backgroundCubemap = await generateInBackground(createStarfieldCubemap);
+        if(document.getElementById('enableStarfield').checked) scene.background = backgroundCubemap;
+    }
+
+    function mapToSphere(face, u, v) {
+        switch(face) {
+            case 0: return new THREE.Vector3(  1, -v, -u);
+            case 1: return new THREE.Vector3( -1, -v,  u);
+            case 2: return new THREE.Vector3(  u,  1,  v);
+            case 3: return new THREE.Vector3(  u, -1, -v);
+            case 4: return new THREE.Vector3(  u, -v,  1);
+            case 5: return new THREE.Vector3( -u, -v, -1);
+        }
+    }
+    
+    async function createStarfieldCubemap() {
+        const size = settings.starfieldSize;
+        if (typeof SimplexNoise === 'undefined') return new THREE.Color(0x000000);
+        const noiseGen = new SimplexNoise();
+        const nebulaDensity = planetUniforms.uNebulaDensity.value;
+        const canvases = [...Array(6)].map(() => { const c = document.createElement('canvas'); c.width = size; c.height = size; return c; });
+        const nebulaeParams = [...Array(Math.floor(Math.random() * 3) + 2)].map(() => ({
+            hue1: Math.random(),
+            hue2: (Math.random() > 0.5) ? (Math.random() * 0.1 - 0.05) : (Math.random() * 0.4 - 0.2),
+            scale: Math.random() * 1.5 + 0.3,
+            density: (Math.random() * 0.1 + 0.03) * nebulaDensity,
+        }));
+        
+        for (const [faceIndex, canvas] of canvases.entries()) {
+            const context = canvas.getContext('2d');
+            context.fillStyle = 'black'; context.fillRect(0, 0, size, size);
+            const imageData = context.getImageData(0, 0, size, size); const data = imageData.data;
+            for(let y = 0; y < size; y++) {
+                for(let x = 0; x < size; x++) {
+                    const u = (x / size) * 2 - 1; const v = (y / size) * 2 - 1;
+                    const pos3D = mapToSphere(faceIndex, u, v).normalize();
+                    nebulaeParams.forEach(p => {
+                        let n = 0.5 * (1 + noiseGen.noise3D(pos3D.x*p.scale, pos3D.y*p.scale, pos3D.z*p.scale)) + 0.25 * (1 + noiseGen.noise3D(pos3D.x*p.scale*2.2, pos3D.y*p.scale*2.2, pos3D.z*p.scale*2.2));
+                        n = Math.pow(n, 3.0);
+                        if(n > 0.55) {
+                            const i = (y * size + x) * 4;
+                            const cn = 0.5 * (1 + noiseGen.noise3D(pos3D.x*3.5, pos3D.y*3.5, pos3D.z*3.5));
+                            const hue = p.hue1 + p.hue2 * cn;
+                            const color = new THREE.Color().setHSL(hue, 0.6, 0.4);
+                            const alpha = (n - 0.55) * p.density;
+                            data[i] = Math.min(255, data[i] + color.r * 255 * alpha);
+                            data[i+1] = Math.min(255, data[i+1] + color.g * 255 * alpha);
+                            data[i+2] = Math.min(255, data[i+2] + color.b * 255 * alpha);
+                        }
+                    });
+                }
+            }
+            context.putImageData(imageData, 0, 0);
+            for (let i = 0; i < settings.starCount; i++) {
+                const x = Math.random() * size; const y = Math.random() * size;
+                const r = Math.pow(Math.random(), 2.5) * 1.2 + 0.2;
+                const b = Math.pow(Math.random(), 3.0) * 0.7 + 0.3; 
+                const grad = context.createRadialGradient(x, y, 0, x, y, r);
+                grad.addColorStop(0, `hsla(${(0.55 + Math.random() * 0.15)*360}, ${Math.random()*40}%, ${(0.9 + Math.random() * 0.1)*100}%, ${b})`);
+                grad.addColorStop(1, `hsla(0, 0%, 100%, 0)`);
+                context.fillStyle = grad; context.fillRect(x-r, y-r, r*2, r*2);
+            }
+        }
+        const texture = new THREE.CubeTexture(canvases);
+        texture.needsUpdate = true; return texture;
+    }
+
+    function setupUI() {
+        const template = document.getElementById('controls-template');
+        const desktopPanel = document.querySelector('.control-panel .panel-content');
+        const mobilePanel = document.querySelector('#mobile-controls-modal .panel-content');
+        const desktopTabs = document.querySelector('.control-panel .tab-nav');
+        const mobileTabs = document.querySelector('#mobile-controls-modal .tab-nav');
+
+        desktopPanel.innerHTML = template.innerHTML;
+        mobilePanel.innerHTML = template.innerHTML;
+        mobileTabs.innerHTML = desktopTabs.innerHTML;
+        
+        // Function to update the visibility of bloom controls and enable/disable bloom effect
+        function updateSunUI(sunEnabled) {
+            const bloomControls = document.querySelectorAll('.bloom-controls');
+            // Bloom controls are now always visible on mobile if sun is enabled.
+            // The `settings.bloom` check is removed here to ensure visibility.
+            bloomControls.forEach(el => el.classList.toggle('hidden', !sunEnabled));
+            
+            // Only enable bloom effect if the sun is on AND the current fidelity setting allows bloom
+            if (bloomPass) bloomPass.enabled = sunEnabled && settings.bloom;
+            if (finalPass) finalPass.material.uniforms.uBloomEnabled.value = (sunEnabled && settings.bloom) ? 1.0 : 0.0;
+        }
+        
+        document.querySelectorAll('#enableSun').forEach(sunSwitch => {
+            sunSwitch.addEventListener('input', (e) => {
+                sun.visible = e.target.checked;
+                // Call updateSunUI to manage bloom controls visibility and effect based on sun state
+                updateSunUI(e.target.checked);
+            });
+        });
+        
+        function setupTabEvents(container) {
+            const tabs = container.querySelectorAll('.tab-button');
+            const contents = container.nextElementSibling.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.dataset.tab;
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    contents.forEach(c => c.classList.remove('active'));
+                    container.nextElementSibling.querySelector(`#${tabId}`).classList.add('active');
+                });
+            });
+            if(tabs.length) tabs[0].classList.add('active');
+            if(contents.length) contents[0].classList.add('active');
+        }
+
+        setupTabEvents(desktopTabs);
+        setupTabEvents(mobileTabs);
+
+        const allControls = document.querySelectorAll('input[type="range"], input[type="checkbox"], select');
+        allControls.forEach(control => {
+            control.addEventListener('input', (e) => {
+                const { id, value, type, checked } = e.target;
+                
+                Array.from(allControls).filter(c => c.id === id && c !== e.target).forEach(other => {
+                    if (type === 'checkbox') other.checked = checked; else other.value = value;
+                });
+
+                if (type === 'checkbox') {
+                    switch (id) {
+                        case 'enableAtmosphere': atmosphere.visible = checked; break;
+                        case 'enableClouds': clouds.visible = checked; break;
+                        case 'enableStarfield': scene.background = checked ? backgroundCubemap : blackBackground; break;
+                        case 'enableSun': 
+                            sun.visible = checked;
+                            // Ensure bloom UI and effect are updated when sun is toggled
+                            updateSunUI(checked); 
+                            break;
+                    }
+                } else {
+                    const floatValue = parseFloat(value);
+                    const uniformName = 'u' + id.charAt(0).toUpperCase() + id.slice(1);
+                    if (planetUniforms[uniformName]) planetUniforms[uniformName].value = floatValue;
+                    else if (clouds.material.uniforms[uniformName]) clouds.material.uniforms[uniformName].value = floatValue;
+                    else if (atmosphere.material.uniforms[uniformName]) atmosphere.material.uniforms[uniformName].value = floatValue;
+                    else {
+                        switch(id) {
+                            case 'starTemp': case 'starIntensity': updateStar(); break;
+                            case 'ambientLight': ambientLight.intensity = floatValue; planetUniforms.uAmbientLightIntensity.value = floatValue; break;
+                            case 'cloudAltitude': clouds.scale.setScalar(floatValue); break;
+                            case 'sunSize': 
+                                sun.scale.setScalar(floatValue * 2.0);
+                                updateStar();
+                                break;
+                            case 'bloomStrength': if(bloomPass) bloomPass.strength = floatValue; break;
+                            case 'bloomRadius': if(bloomPass) bloomPass.radius = floatValue; break;
+                        }
+                    }
+                }
+            });
+        });
+        
+        const panel = document.querySelector('.control-panel');
+        const toggleBtn = document.getElementById('panel-toggle-btn');
+        const toggleIcon = toggleBtn.querySelector('i');
+        toggleBtn.addEventListener('click', () => {
+             const isCollapsed = panel.classList.toggle('collapsed');
+             toggleBtn.style.left = isCollapsed ? '0px' : 'var(--panel-width)';
+             toggleIcon.classList.toggle('fa-angles-left', !isCollapsed);
+             toggleIcon.classList.toggle('fa-angles-right', isCollapsed);
+        });
+        
+        const mobileModal = document.getElementById('mobile-controls-modal');
+        document.getElementById('mobile-show-controls-btn').addEventListener('click', () => mobileModal.classList.add('visible'));
+        document.getElementById('mobile-close-controls-btn').addEventListener('click', () => mobileModal.classList.remove('visible'));
+
+        const pauseBtns = [document.getElementById('pause-toggle'), document.getElementById('mobile-pause-btn')];
+        pauseBtns.forEach(btn => btn.addEventListener('click', () => {
+            const isRunning = clock.running;
+            if(isRunning) clock.stop(); else clock.start();
+            pauseBtns.forEach(b => {
+                const icon = b.querySelector('i'); const text = b.querySelector('span');
+                icon.classList.toggle('fa-pause', !isRunning); icon.classList.toggle('fa-play', isRunning);
+                if (text) text.textContent = isRunning ? 'Play' : 'Pause';
+            });
+        }));
+
+        [document.getElementById('new-planet-btn-footer'), document.getElementById('mobile-new-system-btn')].forEach(btn => btn.addEventListener('click', () => randomizePlanet(false)));
+    
+        document.querySelectorAll('#export-btn').forEach(btn => btn.addEventListener('click', exportPNG));
+        
+        // Initial UI update for bloom controls based on current sun state
+        updateSunUI(document.getElementById('enableSun').checked);
+    }
+    
+    function updateStar() {
+        const temp = parseFloat(document.getElementById('starTemp').value);
+        const intensity = parseFloat(document.getElementById('starIntensity').value);
+        const sunSize = parseFloat(document.getElementById('sunSize').value);
+        const effectiveIntensity = intensity * (1 + sunSize / 5.0);
+        
+        const starColor = getBlackbodyColor(temp);
+        starLight.color.set(starColor); 
+        starLight.intensity = effectiveIntensity;
+        sun.material.uniforms.uColor.value.set(starColor);
+        planetUniforms.uStarIntensity.value = effectiveIntensity;
+    }
+    
+    async function randomizePlanet(isInitialLoad = false) {
+        const newSystemBtns = [document.getElementById('new-planet-btn-footer'), document.getElementById('mobile-new-system-btn')];
+        const controlPanel = document.querySelector('.control-panel');
+
+        controlPanel.classList.add('is-generating');
+        newSystemBtns.forEach(btn => {
+            btn.disabled = true;
+            if (btn.id === 'mobile-new-system-btn') btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i><span>Generating</span>`;
+            else btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Generating...`;
+        });
+        
+        await generateInBackground(() => {
+            // Preserve the sun state if not the initial load, otherwise set it to false
+            const currentSunState = isInitialLoad ? false : document.getElementById('enableSun').checked;
+
+            const params = {
+                surfaceSeed: THREE.MathUtils.randFloat(0, 100), planetRotationSpeed: THREE.MathUtils.randFloat(0.01, 0.2),
+                landmassScale: THREE.MathUtils.randFloat(0.8, 4.0), mountainScale: THREE.MathUtils.randFloat(0.5, 6.0),
+                erosion: THREE.MathUtils.randFloat(0.1, 2.5), geologicalComplexity: THREE.MathUtils.randFloat(0.1, 2.0),
+                landHue: Math.random(), waterLevel: THREE.MathUtils.randFloat(0.1, 0.8),
+                shallowOceanHue: Math.random(), deepOceanHue: Math.random(), iceCaps: THREE.MathUtils.randFloat(0.0, 1.5),
+                atmoHue: Math.random(), atmoDensity: THREE.MathUtils.randFloat(0, 1.2),
+                cloudCover: THREE.MathUtils.randFloat(0.0, 1.0), cloudSpeed: THREE.MathUtils.randFloat(0, 0.1),
+                cloudAltitude: THREE.MathUtils.randFloat(1.01, 1.05), cloudType: Math.random(),
+                starTemp: THREE.MathUtils.randInt(2800, 18000), starIntensity: THREE.MathUtils.randFloat(1.5, 3.5), 
+                starDistance: THREE.MathUtils.randFloat(4, 15), ambientLight: THREE.MathUtils.randFloat(0.1, 0.5),
+                nebulaDensity: Math.random(), cloudDirection: new THREE.Vector2(THREE.MathUtils.randFloat(-1, 1), THREE.MathUtils.randFloat(-1, 1)).normalize(),
+                cloudPatternSeed: Math.random(), 
+                sunSize: THREE.MathUtils.randFloat(1, 3),
+                // Only randomize bloom settings if bloom is enabled in the fidelity settings
+                bloomStrength: settings.bloom ? THREE.MathUtils.randFloat(0.5, 0.9) : 0.8, 
+                bloomRadius: settings.bloom ? THREE.MathUtils.randFloat(0.2, 1.0) : 0.5,
+            };
+
+            document.querySelectorAll('input, select').forEach(control => { 
+                if (params[control.id] !== undefined) {
+                     control.value = params[control.id]; 
+                }
+            });
+            
+            Object.keys(planetUniforms).forEach(key => {
+                const paramKey = key.substring(1).charAt(0).toLowerCase() + key.slice(2);
+                if(params[paramKey] !== undefined) planetUniforms[key].value = params[paramKey];
+            });
+
+            const sunSwitch = document.querySelector('#enableSun');
+            sunSwitch.checked = currentSunState;
+            // Dispatch input event to trigger UI and effect update for sun and bloom
+            sunSwitch.dispatchEvent(new Event('input', { bubbles: true }));
+
+            updateStar();
+            ambientLight.intensity = params.ambientLight;
+            Object.assign(atmosphere.material.uniforms, { uAtmoHue: {value: params.atmoHue}, uAtmoDensity: {value: params.atmoDensity} });
+            Object.assign(clouds.material.uniforms, {
+                uCloudCover: {value: params.cloudCover}, uCloudSpeed: {value: params.cloudSpeed},
+                uCloudDirection: {value: params.cloudDirection}, uSurfaceSeed: {value: params.surfaceSeed},
+                uCloudPatternSeed: {value: params.cloudPatternSeed}, uCloudType: {value: params.cloudType}
+            });
+            clouds.scale.setScalar(params.cloudAltitude);
+            planet.rotation.y = Math.random() * Math.PI * 2;
+            sun.scale.setScalar(params.sunSize * 2.0);
+            
+            // Only update bloomPass if bloom is enabled in the fidelity settings
+            if (bloomPass && settings.bloom) {
+                bloomPass.strength = params.bloomStrength;
+                bloomPass.radius = params.bloomRadius;
+            }
+        });
+        
+        await regenerateBackground();
+
+        if(isInitialLoad) {
+            const loaderEl = document.getElementById('loader');
+            if(loaderEl) { loaderEl.style.opacity = '0'; setTimeout(() => { loaderEl.style.display = 'none'; }, 500); }
+        }
+        
+        setTimeout(() => {
+            controlPanel.classList.remove('is-generating');
+            newSystemBtns.forEach(btn => {
+                btn.disabled = false;
+                if (btn.id === 'mobile-new-system-btn') btn.innerHTML = `<i class="fas fa-meteor"></i><span>New System</span>`;
+                else btn.innerHTML = `New System`;
+            });
+        }, 300);
+    }
+    
+    function onWindowResize() {
+        if (!camera || !renderer) return;
+        const newHeight = window.innerHeight;
+        camera.aspect = window.innerWidth / newHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, newHeight);
+        bloomComposer.setSize(window.innerWidth, newHeight);
+        finalComposer.setSize(window.innerWidth, newHeight);
+    }
+    window.addEventListener('resize', onWindowResize);
+
+    function exportPNG() {
+        const exportBtns = document.querySelectorAll('#export-btn');
+        exportBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.innerHTML = 'Exporting...';
+        });
+
+        const resolutionSelect = document.getElementById('resolution');
+        const [width, height] = resolutionSelect.value.split(',').map(Number);
+       
+        const tempRenderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+        tempRenderer.setPixelRatio(1);
+        tempRenderer.setSize(width, height);
+        tempRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        tempRenderer.toneMappingExposure = 0.5;
+
+        const tempCamera = camera.clone();
+        tempCamera.aspect = width / height;
+        tempCamera.updateProjectionMatrix();
+
+        // Ensure tempBloomPass and tempFinalPass reflect the current bloom settings and active state
+        const tempBloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), bloomPass.strength, bloomPass.radius, bloomPass.threshold);
+        const tempBloomComposer = new EffectComposer(tempRenderer);
+        tempBloomComposer.renderToScreen = false;
+        tempBloomComposer.addPass(new RenderPass(scene, tempCamera));
+        tempBloomComposer.addPass(tempBloomPass);
+
+        const tempFinalPass = new ShaderPass(
+            new THREE.ShaderMaterial({
+                uniforms: {
+                    baseTexture: { value: null },
+                    bloomTexture: { value: tempBloomComposer.renderTarget2.texture },
+                    uBloomEnabled: { value: finalPass.material.uniforms.uBloomEnabled.value }
+                },
+                vertexShader: finalVertexShader,
+                fragmentShader: finalFragmentShader,
+            }), "baseTexture"
+        );
+        tempFinalPass.needsSwap = true;
+        
+        const tempFinalComposer = new EffectComposer(tempRenderer);
+        tempFinalComposer.addPass(new RenderPass(scene, tempCamera));
+        tempFinalComposer.addPass(tempFinalPass);
+
+        setTimeout(() => {
+            animateSingleFrameForExport(tempCamera);
+            
+            // Only apply bloom effects during export if it's currently enabled in the main scene
+            if (bloomPass.enabled && sun.visible && settings.bloom) {
+                 const originalBackground = scene.background;
+                 scene.background = blackBackground;
+                 scene.traverse(darkenNonBloomed);
+                 tempBloomComposer.render();
+                 scene.background = originalBackground;
+                 scene.traverse(restoreMaterial);
+            }
+            
+            tempFinalComposer.render();
+
+            const dataURL = tempRenderer.domElement.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = `cosmic-forge-${Date.now()}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            exportBtns.forEach(btn => {
+                btn.disabled = false;
+                btn.innerHTML = 'Export PNG';
+            });
+
+            tempRenderer.dispose();
+            tempBloomComposer.dispose();
+            tempFinalComposer.dispose();
+            tempBloomPass.dispose();
+            tempFinalPass.dispose();
+
+        }, 100);
+    }
+
+    function animateSingleFrameForExport(exportCamera) {
+        const time = clock.getElapsedTime();
+        const starDistance = parseFloat(document.getElementById('starDistance').value);
+        
+        starLight.position.set(starDistance, 0, 0);
+        sun.position.copy(starLight.position);
+        sun.lookAt(exportCamera.position);
+        planetUniforms.uStarPosition.value.copy(starLight.position);
+        clouds.material.uniforms.uTime.value = time;
+    }
+    
+    function animate() {
+        requestAnimationFrame(animate);
+        const delta = clock.getDelta(); 
+        const time = clock.getElapsedTime();
+        
+        const starDistance = parseFloat(document.getElementById('starDistance').value);
+        const planetRotationSpeed = parseFloat(document.getElementById('planetRotationSpeed').value);
+        const cloudWindSpeed = parseFloat(document.getElementById('cloudSpeed').value);
+        
+        starLight.position.set(starDistance, 0, 0);
+        sun.position.copy(starLight.position);
+        sun.lookAt(camera.position);
+        planetUniforms.uStarPosition.value.copy(starLight.position);
+
+        const planetRotationDelta = delta * planetRotationSpeed;
+        planet.rotation.y += planetRotationDelta;
+        atmosphere.rotation.y += planetRotationDelta;
+        
+        const cloudRotationDelta = delta * (planetRotationSpeed + cloudWindSpeed * 0.5);
+        clouds.rotation.y += cloudRotationDelta; 
+        
+        clouds.material.uniforms.uTime.value = time;
+        
+        controls.update();
+
+        // Only render bloom if bloomPass is enabled (which now depends on sun state and fidelity setting)
+        if (bloomPass.enabled && sun.visible) {
+            const originalBackground = scene.background;
+            scene.background = blackBackground;
+            scene.traverse(darkenNonBloomed);
+            bloomComposer.render();
+            scene.background = originalBackground;
+            scene.traverse(restoreMaterial);
+        }
+
+        finalComposer.render();
+    }
+    
+    function darkenNonBloomed(obj) {
+        if (obj !== sun && bloomLayer.test(obj.layers) === false) {
+            materials[obj.uuid] = obj.material;
+            obj.material = darkMaterial;
+        }
+    }
+
+    function restoreMaterial(obj) {
+        if (materials[obj.uuid]) {
+            obj.material = materials[obj.uuid];
+            delete materials[obj.uuid];
+        }
+    }
+
+    function getBlackbodyColor(temp) {
+        temp /= 100; let r, g, b;
+        if (temp <= 66) { r = 255; } else { r = 329.698727446 * Math.pow(temp - 60, -0.1332047592); }
+        if (temp <= 66) { g = 99.4708025861 * Math.log(temp) - 161.1195681661; } else { g = 288.1221695283 * Math.pow(temp - 60, -0.0755148492); }
+        if (temp >= 66) { b = 255; } else { if (temp <= 19) { b = 0; } else { b = 138.5177312231 * Math.log(temp - 10) - 305.0447927307; } }
+        const color = new THREE.Color(Math.min(255, Math.max(0, r))/255, Math.min(255, Math.max(0, g))/255, Math.min(255, Math.max(0, b))/255);
+        const hsl = {}; color.getHSL(hsl); color.setHSL(hsl.h, Math.min(1.0, hsl.s * 1.2), hsl.l); return color;
+    }
+
+    // SHADER CODE
+    const sunVertexShader = `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+    const sunFragmentShader = `varying vec2 vUv; uniform vec3 uColor; void main() { float dist = distance(vUv, vec2(0.5)); float alpha = 1.0 - smoothstep(0.45, 0.5, dist); gl_FragColor = vec4(uColor, alpha); }`;
+    const finalVertexShader = `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 ); }`;
+    const finalFragmentShader = `uniform sampler2D baseTexture; uniform sampler2D bloomTexture; uniform float uBloomEnabled; varying vec2 vUv; void main() { vec4 baseColor = texture2D( baseTexture, vUv ); vec4 bloomColor = texture2D( bloomTexture, vUv ); gl_FragColor = baseColor + bloomColor * uBloomEnabled; }`;
+    const NOISE_FUNCTIONS = `vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;} vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;} vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);} vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;} float snoise(vec3 v){const vec2 C=vec2(1.0/6.0,1.0/3.0);const vec4 D=vec4(0.0,0.5,1.0,2.0);vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.0-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;i=mod289(i);vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));float n_=0.142857142857;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.0*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.0*x_);vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.0-abs(x)-abs(y);vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);vec4 s0=floor(b0)*2.0+1.0;vec4 s1=floor(b1)*2.0+1.0;vec4 sh=-step(h,vec4(0.0));vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0);m=m*m;return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));} float fbm(vec3 p,int oct,float per){float t=0.0;float f=1.0;float a=1.0;float mv=0.0;for(int i=0;i<oct;i++){t+=snoise(p*f)*a;mv+=a;a*=per;f*=2.0;} return(t/mv+1.0)*0.5;}`;
+    const planetVertexShader = `
+        varying vec3 vNormal;
+        varying vec3 vWorldPosition;
+        varying vec3 vLocalPosition;
+        void main() {
+            vNormal = normalize((modelMatrix * vec4(normal, 0.0)).xyz);
+            vec4 worldPos = modelMatrix * vec4(position, 1.0);
+            vWorldPosition = worldPos.xyz;
+            vLocalPosition = position;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }`;
+    const planetFragmentShader = `
+        uniform float uSurfaceSeed;
+        uniform vec3 uStarPosition;
+        uniform float uStarIntensity;
+        uniform float uLandmassScale;
+        uniform float uMountainScale;
+        uniform float uErosion;
+        uniform float uGeologicalComplexity;
+        uniform float uCraterDepth;
+        uniform float uWaterLevel;
+        uniform float uLandHue;
+        uniform float uShallowOceanHue;
+        uniform float uDeepOceanHue;
+        uniform float uIceCaps;
+        uniform float uAmbientLightIntensity;
+        uniform vec3 uCraterPos1;
+        uniform vec3 uCraterPos2;
+        uniform float uCraterSize1;
+        uniform float uCraterSize2;
+        varying vec3 vNormal;
+        varying vec3 vWorldPosition;
+        varying vec3 vLocalPosition;
+        ${NOISE_FUNCTIONS} 
+        vec3 hsv2rgb(vec3 c){vec4 K=vec4(1.0,2.0/3.0,1.0/3.0,3.0);vec3 p=abs(fract(c.xxx+K.xyz)*6.0-K.www);return c.z*mix(K.xxx,clamp(p-K.xxx,0.0,1.0),c.y);} 
+        float ridged(vec3 p,int oct,float per){float t=0.0;float f=1.0;float a=1.0;float mv=0.0;for(int i=0;i<oct;i++){t+=(1.0-abs(snoise(p*f)))*a;mv+=a;a*=per;f*=2.0;} return t/mv;} 
+        float crater(vec3 p,vec3 craterPos,float craterSize){float d=distance(p,craterPos);float rimWidth=craterSize*0.2;float inner=craterSize-rimWidth;float falloff=smoothstep(craterSize,inner,d);float rim=smoothstep(inner-rimWidth,inner,d)*(1.0-smoothstep(inner,craterSize+rimWidth*0.5,d));return falloff-rim*0.2;} 
+        void main() {
+            vec3 p = vLocalPosition * uLandmassScale + uSurfaceSeed;
+            float warp_factor=fbm(p*0.5,3,0.5)*uErosion*0.5;
+            vec3 warp_coords=p+vec3(snoise(p*0.5),snoise(p*0.5+10.0),snoise(p*0.5+20.0))*warp_factor;
+            float base_continents=fbm(warp_coords*0.6,6,0.45);
+            float c=fbm(warp_coords*uGeologicalComplexity,6,0.5);
+            float r=ridged(warp_coords*uMountainScale*uGeologicalComplexity,8,0.5);
+            float r2=ridged(warp_coords*uMountainScale*uGeologicalComplexity*2.5,4,0.5);
+            float terrainHeight=base_continents*0.7+c*0.3+(r*r)*c*0.4+r2*0.05;
+            float crater1=crater(normalize(vLocalPosition),uCraterPos1,uCraterSize1);
+            float crater2=crater(normalize(vLocalPosition),uCraterPos2,uCraterSize2)*0.8;
+            float height=terrainHeight-(crater1+crater2)*uCraterDepth*4.0;
+            vec3 color;
+            if(height<uWaterLevel){
+                float depth=uWaterLevel-height;
+                float oceanMix=smoothstep(0.0,0.3,depth);
+                vec3 shallowColor=hsv2rgb(vec3(uShallowOceanHue,0.8,0.7));
+                vec3 deepColor=hsv2rgb(vec3(uDeepOceanHue,0.9,0.4));
+                color=mix(shallowColor,deepColor,oceanMix);
+            } else {
+                float elevation=(height-uWaterLevel)/(1.0-uWaterLevel);
+                float color_noise=fbm(vLocalPosition*8.0+uSurfaceSeed,4,0.5);
+                float finalLandHue=uLandHue+(color_noise-0.5)*0.1;
+                vec3 desert=hsv2rgb(vec3(finalLandHue+0.05,mix(0.4,0.6,color_noise),0.6));
+                vec3 grass=hsv2rgb(vec3(finalLandHue,mix(0.7,0.9,color_noise),0.5));
+                vec3 forest=hsv2rgb(vec3(finalLandHue+0.02,0.8,0.3));
+                vec3 rock=hsv2rgb(vec3(finalLandHue-0.05,0.2,mix(0.7,0.9,color_noise)));
+                color=mix(grass,desert,smoothstep(0.0,0.25,elevation));
+                color=mix(color,forest,smoothstep(0.15,0.4,elevation)*(1.0-smoothstep(0.35,0.5,elevation)));
+                color=mix(color,rock,smoothstep(0.45,0.8,elevation));
+                float occlusion=pow(clamp(r,0.0,1.0),2.0);
+                color*=(1.0-occlusion*0.6);
+            } 
+            float iceGradient=smoothstep(0.7,1.0,abs(normalize(vLocalPosition).y));
+            color=mix(color,vec3(0.9,0.9,0.95),iceGradient*uIceCaps);
+            vec3 lightDir=normalize(uStarPosition-vWorldPosition);
+            float dist=length(uStarPosition-vWorldPosition);
+            float attenuation=1.0/(dist*dist);
+            float diffuse=max(0.0,dot(vNormal,lightDir));
+            vec3 finalColor=color*(diffuse*attenuation*uStarIntensity*15.0+uAmbientLightIntensity);
+            gl_FragColor=vec4(finalColor,1.0);
+        }`;
+    const atmoVertexShader = `varying vec3 vNormal;varying vec3 vWorldPosition;void main(){vNormal=normalize(normalMatrix*normal);vec4 worldPos=modelMatrix*vec4(position,1.0);vWorldPosition=worldPos.xyz;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
+    const atmoFragmentShader = `uniform float uTime;uniform vec3 uStarPosition;uniform float uAtmoHue;uniform float uAtmoDensity;varying vec3 vNormal;varying vec3 vWorldPosition;${NOISE_FUNCTIONS} vec3 hsv2rgb(vec3 c){vec4 K=vec4(1.0,2.0/3.0,1.0/3.0,3.0);vec3 p=abs(fract(c.xxx+K.xyz)*6.0-K.www);return c.z*mix(K.xxx,clamp(p-K.xxx,0.0,1.0),c.y);} void main(){vec3 viewDirection=normalize(cameraPosition-vWorldPosition);float viewFresnel=pow(1.0-max(0.0,dot(viewDirection,vNormal)),3.0);vec3 lightDir=normalize(uStarPosition-vWorldPosition);float lightFresnel=pow(max(0.0,dot(lightDir,vNormal)),2.0);float atmoNoise=fbm(vWorldPosition*2.0+uTime*0.1,3,0.5);float atmoNoise2=fbm(vWorldPosition*8.0+uTime*0.2,4,0.5);float density=uAtmoDensity*(0.75+atmoNoise*0.3+atmoNoise2*0.1);vec3 atmoColor=hsv2rgb(vec3(uAtmoHue,0.7,0.8));gl_FragColor=vec4(atmoColor,(viewFresnel*0.8+lightFresnel*0.5)*density);}`;
+    const cloudVertexShader = `varying vec3 vPosition;void main(){vPosition=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
+    const cloudFragmentShader = `
+        uniform float uTime;
+        uniform float uCloudCover;
+        uniform float uCloudSpeed;
+        uniform vec2 uCloudDirection;
+        uniform float uSurfaceSeed;
+        uniform float uCloudPatternSeed;
+        uniform float uCloudType; // 0.0 to 1.0
+        varying vec3 vPosition;
+        ${NOISE_FUNCTIONS}
+
+        float ridgedFBM(vec3 p, int oct, float per) {
+            float t = 0.0;
+            float f = 1.0;
+            float a = 1.0;
+            float mv = 0.0;
+            for(int i = 0; i < oct; i++) {
+                t += (1.0 - abs(snoise(p * f))) * a;
+                mv += a;
+                a *= per;
+                f *= 2.0;
+            }
+            return t / mv;
+        }
+
+        void main() {
+            float speed = uCloudSpeed * 10.0;
+            vec2 time_vec = uCloudDirection * uTime * speed * (uCloudPatternSeed + 0.5);
+            vec3 p = vPosition * (2.0 + uCloudPatternSeed * 2.0) + uSurfaceSeed;
+
+            // --- Archetype 1: Wispy, streaky Cirrus clouds (0.0) ---
+            vec3 p_wispy = p * vec3(1.0, 2.5, 1.0) + vec3(time_vec.x * 0.5, 0.0, 0.0);
+            float wispy_noise = ridgedFBM(p_wispy, 3, 0.6);
+            wispy_noise = pow(wispy_noise, 1.5);
+            wispy_noise = smoothstep(0.0, 0.6, wispy_noise);
+
+            // --- Archetype 2: Puffy, scattered Cumulus clouds (0.33) ---
+            vec3 p_puffy = p * 1.5 + vec3(time_vec.x * 0.2, time_vec.y * 0.2, 0.0);
+            float puffy_base = fbm(p_puffy, 4, 0.5);
+            float puffy_detail = fbm(p_puffy * 2.5, 3, 0.5);
+            float puffy_noise = mix(puffy_base, puffy_detail, 0.4);
+            puffy_noise = smoothstep(0.4, 0.7, puffy_noise);
+            
+            // --- Archetype 3: Large, dense Storm Fronts (0.66) ---
+            vec3 p_stormy = p * 0.8 + vec3(0.0, 0.0, time_vec.y * 0.1);
+            float stormy_base = fbm(p_stormy, 6, 0.5);
+            float stormy_warp = snoise(p_stormy * 3.0 + stormy_base * 4.0 + time_vec.x * 0.1) * 0.5 + 0.5;
+            float stormy_noise = mix(stormy_base, stormy_warp, 0.7);
+            stormy_noise = smoothstep(0.5, 0.75, stormy_noise);
+
+            // --- Archetype 4: Homogeneous, hazy cloud cover (1.0) ---
+            float hazy_noise = fbm(p * 0.5 + time_vec.y * 0.05, 5, 0.5);
+            hazy_noise = smoothstep(0.3, 0.9, hazy_noise);
+
+            // --- Blending between archetypes ---
+            float final_noise;
+            if (uCloudType <= 0.33) {
+                final_noise = mix(wispy_noise, puffy_noise, uCloudType / 0.33);
+            } else if (uCloudType <= 0.66) {
+                final_noise = mix(puffy_noise, stormy_noise, (uCloudType - 0.33) / 0.33);
+            } else {
+                final_noise = mix(stormy_noise, hazy_noise, (uCloudType - 0.66) / 0.34);
+            }
+            
+            float alpha = smoothstep(1.0 - uCloudCover, 1.0, final_noise);
+            alpha *= pow(final_noise, 0.6);
+            
+            gl_FragColor = vec4(vec3(0.9, 0.92, 0.95), alpha);
+        }`;
+    
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
