@@ -7,7 +7,6 @@ Create stunning, unique, and high-resolution space wallpapers with the Cosmic Fo
 
 ![Screenshot](https://github.com/ChrisPirillo/cosmic-forge/blob/main/assets/screenshot.png?raw=true)
 
-
 ![Screenshot](https://raw.githubusercontent.com/ChrisPirillo/cosmic-forge/main/assets/screenshot.png)
 
 * Try it now: [https://pirillo.com/arcade/cosmic-forge.html](https://pirillo.com/arcade/cosmic-forge.html)
