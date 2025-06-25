@@ -1,11 +1,8 @@
-
 # Cosmic Forge Space Wallpaper Generator
 
 Create stunning, unique, and high-resolution space wallpapers with the Cosmic Forge generator. Procedurally generate custom planets, nebulae, and starfields for your desktop or mobile background.
 
 ---
-
-![Screenshot](https://github.com/ChrisPirillo/cosmic-forge/blob/main/assets/screenshot.png?raw=true)
 
 ![Screenshot](https://raw.githubusercontent.com/ChrisPirillo/cosmic-forge/main/assets/screenshot.png)
 
